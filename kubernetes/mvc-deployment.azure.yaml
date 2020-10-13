@@ -1,31 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mvc-deployment
+  name: front-end-shipping-deployment
 spec:
   selector:
     matchLabels:
-      app: mvc
+      app: front-end-shipping
   replicas: 3
   template:
     metadata:
       labels:
-        app: mvc
+        app: front-end-shipping
     spec:
       containers:
-      - name: mvc
-        # image: houssemdocker/mvc-app:1.0 
-        image: ACR_NAME/DOCKER_IMAGE:TAG
-        # image: __ACR_NAME__.azurecr.io/__DOCKER_IMAGE__:__TAG__
+      - name: front-end-shipping
+        image:  epacthechnologies/front-end-shipping:v1
         ports:
         - containerPort: 80
-        resources:
-          limits:
-            cpu: 300m
-            memory: "100Mi"
-          requests:
-            cpu: 100m
-            memory: "50Mi"
         env:
           - name: ConnectionStrings__ProductsContext
             valueFrom:
@@ -39,10 +30,10 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: mvc-service
+  name: front-end-shipping-service
 spec:
   selector:
-    app: mvc
+    app: front-end-shipping
   ports:
   - protocol: TCP
     port: 80
